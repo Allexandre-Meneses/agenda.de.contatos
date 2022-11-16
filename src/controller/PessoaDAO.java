@@ -1,13 +1,15 @@
+package controller;
+import java.util.List;
+
+import model.Pessoa;
+
 public abstract class PessoaDAO implements DAO { 
 
     @Override
     public abstract void adicionar(Pessoa p);
 
     @Override
-    public void buscar() {
-        // TODO Auto-generated method stub
-        
-    }
+    public abstract List<Pessoa> buscar(Character inicial);
 
     @Override
     public void remover() {
