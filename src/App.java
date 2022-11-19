@@ -1,23 +1,14 @@
-import java.util.List;
-
-import controller.AgendaPessoaFisica;
-import model.Pessoa;
-import model.PessoaFisica;
+import view.IU;
 
 public class App {
     public static void main(String[] args) throws Exception {
 
-        AgendaPessoaFisica agenda = new AgendaPessoaFisica();
+        //Instância de IU
+        IU iu = new IU();
 
+        //Laço da Agenda
+        while(iu.menu());
         
-        agenda.adicionar(new PessoaFisica("Allexandre"));
-        agenda.adicionar(new PessoaFisica("Aailane"));
-
-        List<Pessoa> busca = agenda.buscar('A');
-
-        for (Pessoa tmp : busca) {
-            System.out.println(tmp.nome);
-        }
-    }
+   }
 
 }

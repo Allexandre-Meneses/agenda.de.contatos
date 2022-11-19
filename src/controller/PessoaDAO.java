@@ -2,8 +2,11 @@ package controller;
 import java.util.List;
 
 import model.Pessoa;
+import model.db.BD;
 
 public abstract class PessoaDAO implements DAO { 
+
+    BD bd;
 
     @Override
     public abstract void adicionar(Pessoa p);

@@ -1,8 +1,11 @@
 package controller;
 import java.util.List;
 
+import model.CPF;
 import model.Pessoa;
+import model.PessoaFisica;
 import view.Agenda;
+import view.IU;
 
 public class AgendaPessoaFisica extends Agenda {
 
@@ -10,7 +13,19 @@ public class AgendaPessoaFisica extends Agenda {
 
     @Override
     public
-    void adicionar(Pessoa p) {
+    void adicionar() {
+        Pessoa p = new PessoaFisica();
+
+        p.setNome(IU.pegaNome());
+        p.setEndereco(IU.pegaEndereco());
+
+        do {
+            p.setTelefone(IU.pegaTelefone());
+        } while (IU.querAddOutroTelefone());
+        
+        CPF cpf = new CPF();
+  
+        p.setDocumento(IU.pegaNumeroCPF(cpf));
         pDAO.adicionar(p);
     }
 
