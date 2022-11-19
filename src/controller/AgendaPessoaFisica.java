@@ -1,4 +1,6 @@
 package controller;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import model.CPF;
@@ -9,11 +11,12 @@ import view.IU;
 
 public class AgendaPessoaFisica extends Agenda {
 
-    PessoaDAO pDAO = new PessoaFisicaDAO();
+    public AgendaPessoaFisica() {
+        super.pessoaDAO = new PessoaFisicaDAO();
+    }
 
     @Override
-    public
-    void adicionar() {
+    public void adicionar() {
         Pessoa p = new PessoaFisica();
 
         p.setNome(IU.pegaNome());
@@ -26,13 +29,18 @@ public class AgendaPessoaFisica extends Agenda {
         CPF cpf = new CPF();
   
         p.setDocumento(IU.pegaNumeroCPF(cpf));
-        pDAO.adicionar(p);
+        pessoaDAO.adicionar(p);
     }
 
     @Override
     public
     List<Pessoa> buscar(Character inicial) {
-        return pDAO.buscar(inicial);
+        return pessoaDAO.buscar(inicial);
+    }
+
+    @Override
+    public Collection<ArrayList<Pessoa>> buscarTodosContatos() {
+        return pessoaDAO.buscarTodosContatos();
     }
 
 }

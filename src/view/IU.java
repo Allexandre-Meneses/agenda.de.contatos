@@ -1,5 +1,8 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,10 +24,11 @@ public class IU {
     // Método para exibir e coletar a opção do menu
     public boolean menu() {
         System.out.println("-------------------------------------");
-        System.out.println("|1| Adicionar Pessoa");
-        System.out.println("|2| Buscar Pessoa");
-        System.out.println("|3| Remover Pessoa");
-        System.out.println("|4| Alterar Pessoa");
+        System.out.println("|1| Adicionar Contato");
+        System.out.println("|2| Buscar Contato");
+        System.out.println("|3| Mostrar todos os COntatos");
+        System.out.println("|4| Remover Contato");
+        System.out.println("|5| Alterar Contato");
         System.out.println("|0| Sair");
 
         int opcao = sc.nextInt();
@@ -37,10 +41,12 @@ public class IU {
                 buscarPessoa();
                 return this.menu();
             case 3:
-                removerPessoa();
+                mostrarTodosContatos();
                 return this.menu();
             case 4:
-            break;
+                removerPessoa();
+                return this.menu();
+            case 5:
             case 0:
             return false;
         }
@@ -63,7 +69,7 @@ public class IU {
         }
     }
 
-    // Método para buscar Pessoas a partir da primeira letra
+    // Método para buscar Contatos a partir da primeira letra
     private void buscarPessoa() {
         System.out.println("Digite a Primeira letra do Nome da Pessoa:");
         List<Pessoa> busca = agendaPF.buscar(sc.next().charAt(0));
@@ -80,8 +86,22 @@ public class IU {
         }
 
     }
+    
+    // Método para mostrar todos os contatos 
+    private void mostrarTodosContatos() {
+        Collection<ArrayList<Pessoa>> todosContatos = agendaPF.buscarTodosContatos();
+        for (ArrayList<Pessoa> tmpList : todosContatos) {
+            for (Pessoa p : tmpList) {
+                System.out.println("-------------------------------------------------");
+                mostrarNome(p);
+                mostrarEndereco(p);
+                mostraDocumento(p);
+                mostraTelefones(p);
+            }
+        }
+    }
 
-    // Método para Remover Pessoas da Agenda
+    // Método para Remover Contatos da Agenda
     private void removerPessoa() {
     }
 

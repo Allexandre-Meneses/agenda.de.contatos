@@ -1,4 +1,6 @@
 package controller;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import model.Pessoa;
@@ -15,6 +17,10 @@ public abstract class PessoaDAO implements DAO {
     public abstract List<Pessoa> buscar(Character inicial);
 
     @Override
+    public abstract Collection<ArrayList<Pessoa>> buscarTodosContatos();
+    
+
+    @Override
     public void remover() {
         // TODO Auto-generated method stub
         
@@ -25,5 +31,5 @@ public abstract class PessoaDAO implements DAO {
         // TODO Auto-generated method stub
         
     }
-    
+
 }
