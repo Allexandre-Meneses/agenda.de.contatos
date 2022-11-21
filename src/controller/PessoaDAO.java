@@ -21,15 +21,9 @@ public abstract class PessoaDAO implements DAO {
     
 
     @Override
-    public void remover() {
-        // TODO Auto-generated method stub
-        
-    }
+    public abstract boolean remover(Pessoa pessoa);
 
     @Override
-    public void alterar() {
-        // TODO Auto-generated method stub
-        
-    }
+    public abstract boolean alterar(Pessoa pessoa);
 
 }

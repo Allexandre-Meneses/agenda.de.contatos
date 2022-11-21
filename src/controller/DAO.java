@@ -13,8 +13,8 @@ public interface DAO {
 
     Collection<ArrayList<Pessoa>> buscarTodosContatos();
 
-    void remover();
+    boolean remover(Pessoa pessoa);
 
-    void alterar();
+    boolean alterar(Pessoa pessoa);
     
 }

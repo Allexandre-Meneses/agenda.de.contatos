@@ -16,4 +16,9 @@ public abstract class Agenda {
     public abstract List<Pessoa> buscar(Character inicial);
 
     public abstract Collection<ArrayList<Pessoa>> buscarTodosContatos();
+
+    public abstract boolean remover(Pessoa pessoa);
+
+    public abstract boolean alterar(Pessoa pessoa);
+    
 }

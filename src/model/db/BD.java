@@ -32,11 +32,12 @@ public abstract class BD {
         return contatos.values();
     }
     
-    boolean alterarPessoa(Pessoa p) {
+    public boolean alterarPessoa(Pessoa p) {
         return true;
     }
 
-    boolean removerPessoa(Pessoa p) {
-        return true;
+    public boolean removerPessoa(Pessoa p) {
+        List<Pessoa> listRemover = contatos.get(p.getNome().toUpperCase().charAt(0));
+        return listRemover.remove(p);
     }
 }

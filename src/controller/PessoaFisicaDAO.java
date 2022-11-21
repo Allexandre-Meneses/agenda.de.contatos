@@ -27,5 +27,15 @@ public class PessoaFisicaDAO extends PessoaDAO {
         return bd.buscarTodosContatos();
     }
 
+    @Override
+    public boolean remover(Pessoa pessoa) {
+        return bd.removerPessoa(pessoa);
+    }
+
+    @Override
+    public boolean alterar(Pessoa pessoa) {
+        return bd.alterarPessoa(pessoa);
+    }
+
     
 }

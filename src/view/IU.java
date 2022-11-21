@@ -2,7 +2,6 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,7 +25,7 @@ public class IU {
         System.out.println("-------------------------------------");
         System.out.println("|1| Adicionar Contato");
         System.out.println("|2| Buscar Contato");
-        System.out.println("|3| Mostrar todos os COntatos");
+        System.out.println("|3| Mostrar todos os Contatos");
         System.out.println("|4| Remover Contato");
         System.out.println("|5| Alterar Contato");
         System.out.println("|0| Sair");
@@ -47,6 +46,8 @@ public class IU {
                 removerPessoa();
                 return this.menu();
             case 5:
+                alterarPessoa();
+                return this.menu();
             case 0:
             return false;
         }
@@ -69,21 +70,57 @@ public class IU {
         }
     }
 
+    // Método para obter do usuario qual dado do Contato ele qer alterar
+    /* !!! FALTA TERMINAR !!! */
+    private Pessoa menuAlterar(Pessoa p) {
+        System.out.println("Qual atributo do COntato deseja Alterar?");
+        System.out.println("|1| Nome");
+        System.out.println("|2| endereço");
+        System.out.println("|3| Adicionar Telefone");
+        System.out.println("|4| Remover Telefone");
+        System.out.println("|5| Documento");
+        System.out.println("|0| Sair");
+
+        int opcao = sc.nextInt();
+
+        switch(opcao) {
+            case 1: 
+                p.setNome(pegaNome());
+                return this.menuAlterar(p);
+            case 2: 
+                p.setEndereco(pegaEndereco());
+                return this.menuAlterar(p);
+            case 3:
+                p.setTelefone(pegaTelefone());
+                return this.menuAlterar(p);
+            case 4: 
+                return this.menuAlterar(p);
+            case 5:
+                return this.menuAlterar(p);
+            case 0:
+                return p;
+        }
+        return p;
+    }
+
     // Método para buscar Contatos a partir da primeira letra
-    private void buscarPessoa() {
+    private List<Pessoa> buscarPessoa() {
         System.out.println("Digite a Primeira letra do Nome da Pessoa:");
         List<Pessoa> busca = agendaPF.buscar(sc.next().charAt(0));
         if (busca != null) {
             for (Pessoa tmp : busca) {
                 System.out.println("-------------------------------------------------");
+                System.out.println(busca.indexOf(tmp)+1);
                 mostrarNome(tmp);
                 mostrarEndereco(tmp);
                 mostraDocumento(tmp);
                 mostraTelefones(tmp);
+                return busca;
             }
         } else {
             System.out.println("Não existe contatos cadastrados com essa Inical!");
         }
+        return new ArrayList<Pessoa>();
 
     }
     
@@ -103,6 +140,22 @@ public class IU {
 
     // Método para Remover Contatos da Agenda
     private void removerPessoa() {
+        System.out.println("Selecione o Contato que Deseja Remover!");
+        List<Pessoa> escolher = buscarPessoa();
+        System.out.println("Qual o Índice do Contato que você deseja remover?");
+        Pessoa remover = escolher.get(sc.nextInt()-1);
+        agendaPF.remover(remover);
+    }
+
+    // Método para Alterar um Contato da Agenda
+    /* !!! FALTA TERMINAR !!! */
+    private void alterarPessoa() {
+        System.out.println("Selecione o Contato que Deseja Alterar!");
+        List<Pessoa> escolher = buscarPessoa();
+        System.out.println("Qual o Índice do Contato que você deseja Alterar?");
+        Pessoa alterar = escolher.get(sc.nextInt()-1);
+        alterar = menuAlterar(alterar);
+        agendaPF.alterar(alterar);
     }
 
     // Método para mostrar o nome da Pessoa

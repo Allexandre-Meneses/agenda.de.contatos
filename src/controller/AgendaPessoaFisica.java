@@ -43,4 +43,16 @@ public class AgendaPessoaFisica extends Agenda {
         return pessoaDAO.buscarTodosContatos();
     }
 
+    @Override
+    public boolean remover(Pessoa pessoa) {
+        return pessoaDAO.remover(pessoa);
+    }
+
+    @Override
+    public boolean alterar(Pessoa pessoa) {
+        return pessoaDAO.alterar(pessoa);
+    }
+
+    
+
 }
