@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.List;
 
 import controller.PessoaDAO;
+import model.CNPJ;
 import model.CPF;
 import model.Pessoa;
 import model.PessoaFisica;
+import model.PessoaJuridica;
 
 public abstract class Agenda {
 
@@ -16,7 +18,8 @@ public abstract class Agenda {
     // Método para adicionar um Contato a agenda
     public void adicionar(Pessoa p) {
 
-        p.setNome(IU.pegaNome());
+        pegaNome(p);
+
         p.setEndereco(IU.pegaEndereco());
 
         do {
@@ -28,7 +31,7 @@ public abstract class Agenda {
 
         pessoaDAO.adicionar(p);
     }
-    
+
     // Método para buscar Contatos na agenda pela inicial do nome
     public List<Pessoa> buscar(Character inicial) {
         return pessoaDAO.buscar(inicial);
@@ -57,10 +60,23 @@ public abstract class Agenda {
             p.setDocumento(IU.pegaNumeroCPF(cpf));
         }
 
-        /*if ( p instanceof PessoaJuridica ) {
+        if ( p instanceof PessoaJuridica ) {
             CNPJ cnpj = new CNPJ();
-            p.setDocumento(IU.peganumeroCNPJ(cnpj));
-        }*/
+            p.setDocumento(IU.pegaNumeroCNPJ(cnpj));
+        }
 
+    }    
+
+    // Método para Setar Nome ou Nome Fantasia no Objeto Pessoa
+    private void pegaNome(Pessoa p) {
+        if ( p instanceof PessoaFisica ) {
+            PessoaFisica pessoaFisica = (PessoaFisica) p;
+            pessoaFisica.setNome(IU.pegaNome());
+        } else {
+            if ( p instanceof PessoaJuridica) {
+                PessoaJuridica pessoaJuridica = (PessoaJuridica) p;
+                pessoaJuridica.setNomeFantasia(IU.pegaNome());
+            }
+        }
     }
 }

@@ -10,13 +10,13 @@ public abstract class BD {
     HashMap<Character, ArrayList<Pessoa>> contatos = new HashMap<Character, ArrayList<Pessoa>>();
 
     // Método para Adicionar Pessoas ao Mapa: contatos
-    public boolean adicionarPessoa(Pessoa p) {
-        if (contatos.get(p.getNome().toUpperCase().charAt(0)) == null){
-            contatos.put(p.getNome().toUpperCase().charAt(0), new ArrayList<Pessoa>());
-            List<Pessoa> listaDePessoas = contatos.get(p.getNome().toUpperCase().charAt(0));
+    public boolean adicionarPessoa(Pessoa p, Character inicial) {
+        if (contatos.get(inicial) == null){
+            contatos.put(inicial, new ArrayList<Pessoa>());
+            List<Pessoa> listaDePessoas = contatos.get(inicial);
             listaDePessoas.add(p);     
         } else {
-            List<Pessoa> listaDePessoas = contatos.get(p.getNome().toUpperCase().charAt(0));
+            List<Pessoa> listaDePessoas = contatos.get(inicial);
             listaDePessoas.add(p);          
         }
         return true;
@@ -38,8 +38,8 @@ public abstract class BD {
     }
 
     // Método para remover um contato da base de dados
-    public boolean removerPessoa(Pessoa p) {
-        List<Pessoa> listRemover = contatos.get(p.getNome().toUpperCase().charAt(0));
+    public boolean removerPessoa(Pessoa p, Character inicial) {
+        List<Pessoa> listRemover = contatos.get(inicial);
         return listRemover.remove(p);
     }
 }

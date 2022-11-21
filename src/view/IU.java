@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import controller.AgendaPessoaFisica;
+import controller.AgendaPessoaJuridica;
+import model.CNPJ;
 import model.CPF;
 import model.Endereco;
 import model.Pessoa;
 import model.PessoaFisica;
+import model.PessoaJuridica;
 import model.Telefone;
 
 
@@ -17,8 +20,9 @@ public class IU {
 
     static Scanner sc = new Scanner(System.in);
 
-    // Instância de AgendaPessoaFisica()
+    // Instância das Agendas
     Agenda agendaPF = new AgendaPessoaFisica();
+    Agenda agendaPJ = new AgendaPessoaJuridica();
 
     // Método para exibir e coletar a opção do menu
     public boolean menu() {
@@ -66,7 +70,7 @@ public class IU {
             case 1:
                 agendaPF.adicionar(new PessoaFisica());
             case 2:
-                //agendaPJ.adicionar();
+                agendaPJ.adicionar(new PessoaJuridica());
         }
     }
 
@@ -85,7 +89,16 @@ public class IU {
 
         switch(opcao) {
             case 1: 
-                p.setNome(pegaNome());
+                if ( p instanceof PessoaFisica) {
+                    PessoaFisica pessoaFisica = (PessoaFisica) p;
+                    pessoaFisica.setNome(pegaNome());
+                } else {
+                    if ( p instanceof PessoaJuridica ) {
+                        PessoaJuridica pessoaJuridica = (PessoaJuridica) p;
+                        pessoaJuridica.setNomeFantasia(pegaNome());
+                    }
+                }
+
                 return this.menuAlterar(p);
             case 2: 
                 p.setEndereco(pegaEndereco());
@@ -160,7 +173,16 @@ public class IU {
 
     // Método para mostrar o nome da Pessoa
     private void mostrarNome(Pessoa tmp) {
-        System.out.println("Nome:" + tmp.getNome());
+        if ( tmp instanceof PessoaFisica ) {
+            PessoaFisica pessoaFisica = (PessoaFisica) tmp;
+            System.out.println("Nome:" + pessoaFisica.getNome());
+        } else {
+            if ( tmp instanceof PessoaJuridica ) {
+                PessoaJuridica pessoaJuridica = (PessoaJuridica) tmp;
+                System.out.println("Nome:" + pessoaJuridica.getNomeFantasia());
+            }
+        }
+
     }
     
     // Método para mostrar o Endereço da Pessoa
@@ -251,12 +273,29 @@ public class IU {
      * @return cpf
      */
     public static CPF pegaNumeroCPF(CPF cpf) {
-            System.out.println("Digite o número do CPF");
-            if( cpf.setNumero(sc.next()) ) {
-                return cpf;
-            }
-            System.err.println("CPF inválido!");
-            return pegaNumeroCPF(cpf);
+        System.out.println("Digite o número do CPF:");
+        if( cpf.setNumero(sc.next()) ) {
+            return cpf;
+        }
+        System.err.println("CPF inválido!");
+        return pegaNumeroCPF(cpf);
+    }
+
+    // Método para pegar o número do Cpf da Pessoa
+    /**
+     * O método recebe um CNPJ e faz o SetNumero no CNPJ, caso o número seja validado,
+     * o método retorna o mesmo CNPJ, com o número já setado
+     * 
+     * @param cnpj
+     * @return cnpj
+     */
+    public static CNPJ pegaNumeroCNPJ(CNPJ cnpj) {
+        System.out.println("Digite o número do CNPJ:");
+        if( cnpj.setNumero(sc.next()) ) {
+            return cnpj;
+        }
+        System.err.println("CNPJ inválido!");
+        return pegaNumeroCNPJ(cnpj);
     }
     
 }

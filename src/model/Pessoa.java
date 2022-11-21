@@ -3,18 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Pessoa {
-    String nome;
     Endereco endereco;
     List<Telefone> telefones = new ArrayList<Telefone>();
     Documento documento;
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;

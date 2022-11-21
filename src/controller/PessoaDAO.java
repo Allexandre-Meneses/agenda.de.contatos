@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 
 import model.Pessoa;
+import model.PessoaFisica;
+import model.PessoaJuridica;
 import model.db.BD;
 
 public abstract class PessoaDAO implements DAO { 
@@ -12,8 +14,21 @@ public abstract class PessoaDAO implements DAO {
     BD bd;
 
     @Override
-    public void adicionar(Pessoa p) {
-        bd.adicionarPessoa(p);
+    public boolean adicionar(Pessoa p) {
+        Character inicial;
+
+        if ( p instanceof PessoaFisica ) {
+            PessoaFisica pessoaFisica = (PessoaFisica) p;
+            inicial = pessoaFisica.getNome().toUpperCase().charAt(0);
+            return bd.adicionarPessoa(p, inicial);
+        } else {
+            if ( p instanceof PessoaJuridica ) {
+                PessoaJuridica pessoaJuridica = (PessoaJuridica) p;
+                inicial = pessoaJuridica.getNomeFantasia().toUpperCase().charAt(0);
+                return bd.adicionarPessoa(p, inicial);
+            }
+        }
+        return false;
     }
 
     @Override
@@ -27,7 +42,20 @@ public abstract class PessoaDAO implements DAO {
     }    
 
     public boolean remover(Pessoa pessoa) {
-        return bd.removerPessoa(pessoa);
+        Character inicial;
+        
+        if ( pessoa instanceof PessoaFisica ) {
+            PessoaFisica pessoaFisica = (PessoaFisica) pessoa;
+            inicial = pessoaFisica.getNome().toUpperCase().charAt(0);
+            return bd.adicionarPessoa(pessoa, inicial);
+        } else {
+            if ( pessoa instanceof PessoaJuridica ) {
+                PessoaJuridica pessoaJuridica = (PessoaJuridica) pessoa;
+                inicial = pessoaJuridica.getNomeFantasia().toUpperCase().charAt(0);
+                return bd.adicionarPessoa(pessoa, inicial);
+            }
+        }
+        return false;
     }
 
     @Override

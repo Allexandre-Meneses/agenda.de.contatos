@@ -7,7 +7,7 @@ import model.Pessoa;
 
 public interface DAO {
 
-    void adicionar(Pessoa p);
+    boolean adicionar(Pessoa p);
 
     List<Pessoa> buscar(Character inicial);
 
