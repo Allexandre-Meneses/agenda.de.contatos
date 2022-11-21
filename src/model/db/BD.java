@@ -32,10 +32,12 @@ public abstract class BD {
         return contatos.values();
     }
     
+    // Método para alterar um contato da base de dados
     public boolean alterarPessoa(Pessoa p) {
         return true;
     }
 
+    // Método para remover um contato da base de dados
     public boolean removerPessoa(Pessoa p) {
         List<Pessoa> listRemover = contatos.get(p.getNome().toUpperCase().charAt(0));
         return listRemover.remove(p);

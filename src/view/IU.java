@@ -64,7 +64,7 @@ public class IU {
 
         switch(opcao) {
             case 1:
-                agendaPF.adicionar();
+                agendaPF.adicionar(new PessoaFisica());
             case 2:
                 //agendaPJ.adicionar();
         }

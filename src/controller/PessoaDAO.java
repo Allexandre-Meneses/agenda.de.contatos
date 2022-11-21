@@ -8,22 +8,31 @@ import model.db.BD;
 
 public abstract class PessoaDAO implements DAO { 
 
+    // Base de Dados
     BD bd;
 
     @Override
-    public abstract void adicionar(Pessoa p);
+    public void adicionar(Pessoa p) {
+        bd.adicionarPessoa(p);
+    }
 
     @Override
-    public abstract List<Pessoa> buscar(Character inicial);
+    public List<Pessoa> buscar(Character inicial) {
+        return bd.buscarPessoa(inicial);
+    }
 
     @Override
-    public abstract Collection<ArrayList<Pessoa>> buscarTodosContatos();
-    
+    public Collection<ArrayList<Pessoa>> buscarTodosContatos() {
+        return bd.buscarTodosContatos();
+    }    
+
+    public boolean remover(Pessoa pessoa) {
+        return bd.removerPessoa(pessoa);
+    }
 
     @Override
-    public abstract boolean remover(Pessoa pessoa);
-
-    @Override
-    public abstract boolean alterar(Pessoa pessoa);
+    public boolean alterar(Pessoa pessoa) {
+        return bd.alterarPessoa(pessoa);
+    }
 
 }
