@@ -1,4 +1,5 @@
 package model.db;
-public class PessoaFisicaBD extends BD{
+
+public class PessoaFisicaBD extends BD {
 
 }
