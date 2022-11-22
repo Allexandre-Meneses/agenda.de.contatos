@@ -58,7 +58,6 @@ public class IU {
         return true;
     }
 
-
     // Método para escolher qual tipo de Pessoa Adicionar, PF/PJ
     private void menuAdicionar() {
         System.out.println("|1| Pessoa Física");
@@ -69,20 +68,21 @@ public class IU {
         switch(opcao) {
             case 1:
                 agendaPF.adicionar(new PessoaFisica());
+                break;
             case 2:
                 agendaPJ.adicionar(new PessoaJuridica());
         }
     }
 
     // Método para obter do usuario qual dado do Contato ele qer alterar
-    /* !!! FALTA TERMINAR !!! */
     private Pessoa menuAlterar(Pessoa p) {
         System.out.println("Qual atributo do COntato deseja Alterar?");
         System.out.println("|1| Nome");
         System.out.println("|2| endereço");
         System.out.println("|3| Adicionar Telefone");
         System.out.println("|4| Remover Telefone");
-        System.out.println("|5| Documento");
+        System.out.println("|5| Alterar Telefone");
+        System.out.println("|6| Documento");
         System.out.println("|0| Sair");
 
         int opcao = sc.nextInt();
@@ -98,7 +98,6 @@ public class IU {
                         pessoaJuridica.setNomeFantasia(pegaNome());
                     }
                 }
-
                 return this.menuAlterar(p);
             case 2: 
                 p.setEndereco(pegaEndereco());
@@ -107,8 +106,13 @@ public class IU {
                 p.setTelefone(pegaTelefone());
                 return this.menuAlterar(p);
             case 4: 
+                removerTelefone(p);
                 return this.menuAlterar(p);
             case 5:
+            alterarTelefone(p);
+                return this.menuAlterar(p);
+            case 6:
+            alterarDocumento(p);
                 return this.menuAlterar(p);
             case 0:
                 return p;
@@ -119,7 +123,23 @@ public class IU {
     // Método para buscar Contatos a partir da primeira letra
     private List<Pessoa> buscarPessoa() {
         System.out.println("Digite a Primeira letra do Nome da Pessoa:");
-        List<Pessoa> busca = agendaPF.buscar(sc.next().charAt(0));
+        Character inicial = sc.next().charAt(0);
+        List<Pessoa> buscaPF = agendaPF.buscar(inicial);
+        List<Pessoa> buscaPJ = agendaPJ.buscar(inicial);
+        List<Pessoa> busca = new ArrayList<Pessoa>();
+
+        if ( buscaPF != null ) {
+            for ( Pessoa tmp : buscaPF ) {
+                busca.add(tmp);
+            }
+        }
+
+        if ( buscaPJ != null ) {
+            for ( Pessoa tmp : buscaPJ ) {
+                busca.add(tmp);
+            }
+        }
+        
         if (busca != null) {
             for (Pessoa tmp : busca) {
                 System.out.println("-------------------------------------------------");
@@ -161,7 +181,6 @@ public class IU {
     }
 
     // Método para Alterar um Contato da Agenda
-    /* !!! FALTA TERMINAR !!! */
     private void alterarPessoa() {
         System.out.println("Selecione o Contato que Deseja Alterar!");
         List<Pessoa> escolher = buscarPessoa();
@@ -218,6 +237,12 @@ public class IU {
     // Método para Pegar o nome da Pessoa
     public static String pegaNome() {
         System.out.println("Digite o nome da Pessoa:");
+        return sc.next();
+    }
+
+    // Método para pegar Razão social da PJ
+    public static String pegaRazaoSocial() {
+        System.out.println("Digite a Razão Social ou Nome Fantasia:");
         return sc.next();
     }
 
@@ -298,4 +323,43 @@ public class IU {
         return pegaNumeroCNPJ(cnpj);
     }
     
+    // Método para remover o número de Telefone de um contato
+    private void removerTelefone(Pessoa p) {
+        List<Telefone> telefones = p.getTelefones();
+        for ( Telefone tmp : telefones ) {
+            System.out.println("--------------------------------------------");
+            System.out.println(telefones.indexOf(tmp) + 1);
+            System.out.println("( " + tmp.getDdd() + " ) " + tmp.getNumero());
+        }
+        System.out.println("Qual o índice do Telefone que você deseja remover?");
+        telefones.remove(sc.nextInt() - 1);
+    }
+
+    // Método para alterar o número de Telefone de um contato
+    private void alterarTelefone(Pessoa p) {
+        List<Telefone> telefones = p.getTelefones();
+        for ( Telefone tmp : telefones ) {
+            System.out.println("--------------------------------------------");
+            System.out.println(telefones.indexOf(tmp) + 1);
+            System.out.println("( " + tmp.getDdd() + " ) " + tmp.getNumero());
+        }
+        System.out.println("Qual o índice do Telefone que você deseja alterar?");
+        Telefone alterar = telefones.get(sc.nextInt() - 1);
+        alterar.setDdd(sc.next());
+        alterar.setNumero(sc.next());
+    }
+
+    // Método para alterar o documento de uma pessoa
+    private void alterarDocumento(Pessoa p) {
+        if ( p instanceof PessoaFisica ) {
+            CPF cpf = (CPF) p.getDocumento();
+            pegaNumeroCPF(cpf);
+        } else {
+            if ( p instanceof PessoaJuridica ) {
+                CNPJ cnpj = (CNPJ) p.getDocumento();
+                pegaNumeroCNPJ(cnpj);
+            }
+        }
+    }
+
 }

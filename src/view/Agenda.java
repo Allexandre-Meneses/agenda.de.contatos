@@ -75,7 +75,7 @@ public abstract class Agenda {
         } else {
             if ( p instanceof PessoaJuridica) {
                 PessoaJuridica pessoaJuridica = (PessoaJuridica) p;
-                pessoaJuridica.setNomeFantasia(IU.pegaNome());
+                pessoaJuridica.setNomeFantasia(IU.pegaRazaoSocial());
             }
         }
     }
