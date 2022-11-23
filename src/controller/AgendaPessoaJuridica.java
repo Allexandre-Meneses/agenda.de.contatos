@@ -2,7 +2,6 @@ package controller;
 
 import model.PessoaJuridica;
 import view.Agenda;
-import view.IU;
 
 public class AgendaPessoaJuridica extends Agenda {
 
@@ -11,7 +10,7 @@ public class AgendaPessoaJuridica extends Agenda {
     }
 
     public void alterarNomeFantasia(PessoaJuridica p) {
-        p.setNomeFantasia(IU.pegaNomeFantasia());
+        super.pegaNome(p);
     }
     
 }

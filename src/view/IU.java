@@ -288,7 +288,7 @@ public class IU {
     public static String pegaNomeFantasia() {
         System.out.println("Digite a Razão Social ou Nome Fantasia:");
         sc.nextLine();
-        return sc.next();
+        return sc.nextLine();
     }
 
     // Método para pegar o Endereço da Pessoa

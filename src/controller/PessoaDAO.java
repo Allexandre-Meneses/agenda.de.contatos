@@ -41,6 +41,7 @@ public abstract class PessoaDAO implements DAO {
         return bd.buscarTodosContatos();
     }    
 
+    @Override
     public boolean remover(Pessoa pessoa) {
         Character inicial;
         

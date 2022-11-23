@@ -89,7 +89,7 @@ public abstract class Agenda {
     }    
 
     // Método para Setar Nome ou Nome Fantasia no Objeto Pessoa
-    private void pegaNome(Pessoa p) {
+    protected void pegaNome(Pessoa p) {
         if ( p instanceof PessoaFisica ) {
             PessoaFisica pessoaFisica = (PessoaFisica) p;
             pessoaFisica.setNome(IU.pegaNome());
