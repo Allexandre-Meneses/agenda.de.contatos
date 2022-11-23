@@ -34,25 +34,25 @@ public class IU {
         System.out.println("|5| Alterar Contato");
         System.out.println("|0| Sair");
 
-        int opcao = sc.nextInt();
+        String opcao = sc.next();
 
         switch(opcao) {
-            case 1: 
+            case "1": 
                 menuAdicionar();
                 return this.menu();
-            case 2:
+            case "2":
                 buscarPessoa();
                 return this.menu();
-            case 3:
+            case "3":
                 mostrarTodosContatos();
                 return this.menu();
-            case 4:
+            case "4":
                 removerPessoa();
                 return this.menu();
-            case 5:
+            case "5":
                 alterarPessoa();
                 return this.menu();
-            case 0:
+            case "0":
             return false;
             default:
                 System.out.println("Opção inválida");
@@ -65,12 +65,12 @@ public class IU {
         System.out.println("|1| Pessoa Física");
         System.out.println("|2| Pessoa Juridica");
 
-        int opcao = sc.nextInt();
+        String opcao = sc.next();
 
         switch(opcao) {
-            case 1:
+            case "1":
                 return agendaPF.adicionar(new PessoaFisica());
-            case 2:
+            case "2":
                 return agendaPJ.adicionar(new PessoaJuridica());
             default:
                 System.out.println("Opção inválida");
@@ -78,7 +78,7 @@ public class IU {
         }
     }
 
-    // Método para obter do usuario qual dado do Contato ele qer alterar
+    // Método para obter do usuario qual dado do Contato ele quer alterar
     private Pessoa menuAlterar(Pessoa p) {
         System.out.println("Qual atributo do COntato deseja Alterar?");
         System.out.println("|1| Nome");
@@ -89,10 +89,10 @@ public class IU {
         System.out.println("|6| Documento");
         System.out.println("|0| Sair");
 
-        int opcao = sc.nextInt();
+        String opcao = sc.next();
 
         switch(opcao) {
-            case 1: 
+            case "1": 
                 if ( p instanceof PessoaFisica) {
                     agendaPF.alterarNome((PessoaFisica) p);
                 } else if ( p instanceof PessoaJuridica ) {
@@ -100,7 +100,7 @@ public class IU {
                 }
                 return this.menuAlterar(p);
 
-            case 2: 
+            case "2": 
                 if ( p instanceof PessoaFisica ) {
                     agendaPF.alterarEndereco(p);
                 } else if ( p instanceof PessoaJuridica ) {
@@ -108,7 +108,7 @@ public class IU {
                 }
                 return this.menuAlterar(p);
 
-            case 3:
+            case "3":
                 if ( p instanceof PessoaFisica ) {
                     agendaPF.adicionarTelefone(p);
                 } else if ( p instanceof PessoaJuridica ) {
@@ -116,14 +116,14 @@ public class IU {
                 }
                 return this.menuAlterar(p);
 
-            case 4: 
+            case "4": 
                 removerTelefone(p);
                 return this.menuAlterar(p);
 
-            case 5:
+            case "5":
                 alterarTelefone(p);
                 return this.menuAlterar(p);
-            case 6:
+            case "6":
                 if ( p instanceof PessoaFisica ) {
                     agendaPF.alterarDocumento(p);
                 } else if ( p instanceof PessoaJuridica) {
@@ -131,10 +131,13 @@ public class IU {
                 }
                 return this.menuAlterar(p);
 
-            case 0:
+            case "0":
                 return p;
+            
+            default:
+                System.out.println("Opção Inválida");
+                return this.menuAlterar(p);
         }
-        return p;
     }
 
     // Método para buscar Contatos a partir da primeira letra
@@ -277,12 +280,14 @@ public class IU {
     // Método para Pegar o nome da Pessoa
     public static String pegaNome() {
         System.out.println("Digite o nome da Pessoa:");
-        return sc.next();
+        sc.nextLine();
+        return sc.nextLine();
     }
 
     // Método para pegar Razão social da PJ
     public static String pegaNomeFantasia() {
         System.out.println("Digite a Razão Social ou Nome Fantasia:");
+        sc.nextLine();
         return sc.next();
     }
 
@@ -292,16 +297,22 @@ public class IU {
         Endereco e = new Endereco();
         if (sc.next().equalsIgnoreCase("S")) {
             System.out.println("Estado:");
+            sc.nextLine();
             e.setEstado(sc.next());
             System.out.println("Cidade:");
+            sc.nextLine();
             e.setCidade(sc.next());
             System.out.println("Cep:");
+            sc.nextLine();
             e.setCep(sc.next());
             System.out.println("Bairro:");
+            sc.nextLine();
             e.setBairro(sc.next());
             System.out.println("Rua:");
+            sc.nextLine();
             e.setRua(sc.next());
             System.out.println("Número da Casa/Apartamento: ");
+            sc.nextLine();
             e.setNumero(sc.next());
             sc.nextLine();
             return e;
