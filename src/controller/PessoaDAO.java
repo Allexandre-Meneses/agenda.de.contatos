@@ -47,12 +47,12 @@ public abstract class PessoaDAO implements DAO {
         if ( pessoa instanceof PessoaFisica ) {
             PessoaFisica pessoaFisica = (PessoaFisica) pessoa;
             inicial = pessoaFisica.getNome().toUpperCase().charAt(0);
-            return bd.adicionarPessoa(pessoa, inicial);
+            return bd.removerPessoa(pessoa, inicial);
         } else {
             if ( pessoa instanceof PessoaJuridica ) {
                 PessoaJuridica pessoaJuridica = (PessoaJuridica) pessoa;
                 inicial = pessoaJuridica.getNomeFantasia().toUpperCase().charAt(0);
-                return bd.adicionarPessoa(pessoa, inicial);
+                return bd.removerPessoa(pessoa, inicial);
             }
         }
         return false;

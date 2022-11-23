@@ -21,8 +21,8 @@ public class IU {
     static Scanner sc = new Scanner(System.in);
 
     // Instância das Agendas
-    Agenda agendaPF = new AgendaPessoaFisica();
-    Agenda agendaPJ = new AgendaPessoaJuridica();
+    AgendaPessoaFisica agendaPF = new AgendaPessoaFisica();
+    AgendaPessoaJuridica agendaPJ = new AgendaPessoaJuridica();
 
     // Método para exibir e coletar a opção do menu
     public boolean menu() {
@@ -54,12 +54,14 @@ public class IU {
                 return this.menu();
             case 0:
             return false;
+            default:
+                System.out.println("Opção inválida");
+                return this.menu();
         }
-        return true;
     }
 
     // Método para escolher qual tipo de Pessoa Adicionar, PF/PJ
-    private void menuAdicionar() {
+    private boolean menuAdicionar() {
         System.out.println("|1| Pessoa Física");
         System.out.println("|2| Pessoa Juridica");
 
@@ -67,10 +69,12 @@ public class IU {
 
         switch(opcao) {
             case 1:
-                agendaPF.adicionar(new PessoaFisica());
-                break;
+                return agendaPF.adicionar(new PessoaFisica());
             case 2:
-                agendaPJ.adicionar(new PessoaJuridica());
+                return agendaPJ.adicionar(new PessoaJuridica());
+            default:
+                System.out.println("Opção inválida");
+                return this.menuAdicionar();
         }
     }
 
@@ -90,30 +94,43 @@ public class IU {
         switch(opcao) {
             case 1: 
                 if ( p instanceof PessoaFisica) {
-                    PessoaFisica pessoaFisica = (PessoaFisica) p;
-                    pessoaFisica.setNome(pegaNome());
-                } else {
-                    if ( p instanceof PessoaJuridica ) {
-                        PessoaJuridica pessoaJuridica = (PessoaJuridica) p;
-                        pessoaJuridica.setNomeFantasia(pegaNome());
-                    }
+                    agendaPF.alterarNome((PessoaFisica) p);
+                } else if ( p instanceof PessoaJuridica ) {
+                        agendaPJ.alterarNomeFantasia((PessoaJuridica) p);
                 }
                 return this.menuAlterar(p);
+
             case 2: 
-                p.setEndereco(pegaEndereco());
+                if ( p instanceof PessoaFisica ) {
+                    agendaPF.alterarEndereco(p);
+                } else if ( p instanceof PessoaJuridica ) {
+                    agendaPJ.alterarEndereco(p);
+                }
                 return this.menuAlterar(p);
+
             case 3:
-                p.setTelefone(pegaTelefone());
+                if ( p instanceof PessoaFisica ) {
+                    agendaPF.adicionarTelefone(p);
+                } else if ( p instanceof PessoaJuridica ) {
+                    agendaPJ.adicionarTelefone(p);
+                }
                 return this.menuAlterar(p);
+
             case 4: 
                 removerTelefone(p);
                 return this.menuAlterar(p);
+
             case 5:
-            alterarTelefone(p);
+                alterarTelefone(p);
                 return this.menuAlterar(p);
             case 6:
-            alterarDocumento(p);
+                if ( p instanceof PessoaFisica ) {
+                    agendaPF.alterarDocumento(p);
+                } else if ( p instanceof PessoaJuridica) {
+                    agendaPJ.alterarDocumento(p);
+                }
                 return this.menuAlterar(p);
+
             case 0:
                 return p;
         }
@@ -140,7 +157,7 @@ public class IU {
             }
         }
         
-        if (busca != null) {
+        if (!busca.isEmpty()) {
             for (Pessoa tmp : busca) {
                 System.out.println("-------------------------------------------------");
                 System.out.println(busca.indexOf(tmp)+1);
@@ -148,8 +165,8 @@ public class IU {
                 mostrarEndereco(tmp);
                 mostraDocumento(tmp);
                 mostraTelefones(tmp);
-                return busca;
             }
+            return busca;
         } else {
             System.out.println("Não existe contatos cadastrados com essa Inical!");
         }
@@ -159,16 +176,36 @@ public class IU {
     
     // Método para mostrar todos os contatos 
     private void mostrarTodosContatos() {
-        Collection<ArrayList<Pessoa>> todosContatos = agendaPF.buscarTodosContatos();
-        for (ArrayList<Pessoa> tmpList : todosContatos) {
-            for (Pessoa p : tmpList) {
-                System.out.println("-------------------------------------------------");
-                mostrarNome(p);
-                mostrarEndereco(p);
-                mostraDocumento(p);
-                mostraTelefones(p);
+        Collection<ArrayList<Pessoa>> todosContatosPF = agendaPF.buscarTodosContatos();
+        Collection<ArrayList<Pessoa>> todosContatosPJ = agendaPJ.buscarTodosContatos();
+        Collection<ArrayList<Pessoa>> todosContatos = new ArrayList<ArrayList<Pessoa>>();
+
+        if ( todosContatosPF != null ) {
+            for (ArrayList<Pessoa> tmpList : todosContatosPF) {
+                todosContatos.add(tmpList);
             }
         }
+
+        if ( todosContatosPJ != null ) {
+            for (ArrayList<Pessoa> tmpList : todosContatosPJ) {
+                todosContatos.add(tmpList);
+            }
+        }
+
+        if (!todosContatos.isEmpty()) {
+            for (ArrayList<Pessoa> tmpList : todosContatos) {
+                for (Pessoa p : tmpList) {
+                    System.out.println("-------------------------------------------------");
+                    mostrarNome(p);
+                    mostrarEndereco(p);
+                    mostraDocumento(p);
+                    mostraTelefones(p);
+                }
+            }
+        } else {
+            System.out.println("Nenhum Contato Cadastrado!");
+        }
+
     }
 
     // Método para Remover Contatos da Agenda
@@ -177,7 +214,11 @@ public class IU {
         List<Pessoa> escolher = buscarPessoa();
         System.out.println("Qual o Índice do Contato que você deseja remover?");
         Pessoa remover = escolher.get(sc.nextInt()-1);
-        agendaPF.remover(remover);
+        if (remover instanceof PessoaFisica) {
+            agendaPF.remover(remover);
+        } else if ( remover instanceof PessoaJuridica ) {
+            agendaPJ.remover(remover);
+        }
     }
 
     // Método para Alterar um Contato da Agenda
@@ -187,7 +228,6 @@ public class IU {
         System.out.println("Qual o Índice do Contato que você deseja Alterar?");
         Pessoa alterar = escolher.get(sc.nextInt()-1);
         alterar = menuAlterar(alterar);
-        agendaPF.alterar(alterar);
     }
 
     // Método para mostrar o nome da Pessoa
@@ -241,7 +281,7 @@ public class IU {
     }
 
     // Método para pegar Razão social da PJ
-    public static String pegaRazaoSocial() {
+    public static String pegaNomeFantasia() {
         System.out.println("Digite a Razão Social ou Nome Fantasia:");
         return sc.next();
     }
@@ -263,6 +303,7 @@ public class IU {
             e.setRua(sc.next());
             System.out.println("Número da Casa/Apartamento: ");
             e.setNumero(sc.next());
+            sc.nextLine();
             return e;
         } else {
             return e;
@@ -332,7 +373,11 @@ public class IU {
             System.out.println("( " + tmp.getDdd() + " ) " + tmp.getNumero());
         }
         System.out.println("Qual o índice do Telefone que você deseja remover?");
-        telefones.remove(sc.nextInt() - 1);
+        if ( p instanceof PessoaFisica ) {
+            agendaPF.removerTelefone(p, sc.nextInt() - 1);
+        } else if ( p instanceof PessoaJuridica ) {
+            agendaPJ.removerTelefone(p, sc.nextInt() - 1);
+        }
     }
 
     // Método para alterar o número de Telefone de um contato
@@ -345,20 +390,11 @@ public class IU {
         }
         System.out.println("Qual o índice do Telefone que você deseja alterar?");
         Telefone alterar = telefones.get(sc.nextInt() - 1);
-        alterar.setDdd(sc.next());
-        alterar.setNumero(sc.next());
-    }
-
-    // Método para alterar o documento de uma pessoa
-    private void alterarDocumento(Pessoa p) {
+        
         if ( p instanceof PessoaFisica ) {
-            CPF cpf = (CPF) p.getDocumento();
-            pegaNumeroCPF(cpf);
-        } else {
-            if ( p instanceof PessoaJuridica ) {
-                CNPJ cnpj = (CNPJ) p.getDocumento();
-                pegaNumeroCNPJ(cnpj);
-            }
+            agendaPF.alterarTelefone(alterar);
+        } else if ( p instanceof PessoaJuridica ) {
+            agendaPJ.alterarTelefone(alterar);
         }
     }
 

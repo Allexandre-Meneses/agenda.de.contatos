@@ -5,7 +5,13 @@
         "lib/**/*.jar"
     ],
     "cSpell.words": [
+        "cnpj",
+        "CPNJ",
         "endereco",
-        "Juridica"
+        "Inical",
+        "Juridica",
+        "opcao",
+        "Razao",
+        "usuario"
     ]
 }

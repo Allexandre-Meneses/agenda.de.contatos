@@ -9,7 +9,7 @@ public abstract class Documento {
     }
     
     public boolean setNumero(String numero) {
-        if( validaNumero(numero) && validaQtdPartes(numero) ) {
+        if( validaNumero(numero) ) {
             this.numero = numero;
             return true;
         }
@@ -17,8 +17,5 @@ public abstract class Documento {
     }
 
     protected abstract boolean validaNumero(String numero);
-
-    protected abstract boolean validaQtdPartes(String numero);
-
 
 }

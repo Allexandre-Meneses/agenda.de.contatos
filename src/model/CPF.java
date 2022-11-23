@@ -8,16 +8,6 @@ public class CPF extends Documento {
 
     @Override
     protected boolean validaNumero(String numero) {
-        // TODO Auto-generated method stub
-        return true;
+        return numero.length() == 11;
     }
-
-    @Override
-    protected boolean validaQtdPartes(String numero) {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-
-
 }

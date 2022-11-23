@@ -10,13 +10,14 @@ import model.CPF;
 import model.Pessoa;
 import model.PessoaFisica;
 import model.PessoaJuridica;
+import model.Telefone;
 
 public abstract class Agenda {
 
     protected PessoaDAO pessoaDAO;
 
     // Método para adicionar um Contato a agenda
-    public void adicionar(Pessoa p) {
+    public boolean adicionar(Pessoa p) {
 
         pegaNome(p);
 
@@ -29,7 +30,7 @@ public abstract class Agenda {
         pegaDocumento(p);
       
 
-        pessoaDAO.adicionar(p);
+        return pessoaDAO.adicionar(p);
     }
 
     // Método para buscar Contatos na agenda pela inicial do nome
@@ -47,9 +48,29 @@ public abstract class Agenda {
         return pessoaDAO.remover(pessoa);
     }
 
-    // Método para alterar um contato da Base de Dados
-    public boolean alterar(Pessoa pessoa) {
-        return pessoaDAO.alterar(pessoa);
+    // Métodos para para alterar um contato da Base de Dados
+    public void alterarEndereco(Pessoa p) {
+        p.setEndereco(IU.pegaEndereco());
+    }
+
+    public void adicionarTelefone(Pessoa p) {
+        p.setTelefone(IU.pegaTelefone());
+    }
+
+    public void removerTelefone(Pessoa p, int index) {
+        p.getTelefones().remove(index);
+    }
+
+    public void alterarTelefone(Telefone t) {
+        t = IU.pegaTelefone();
+    }
+
+    public void alterarDocumento(Pessoa p) {
+        if ( p instanceof PessoaFisica ) {
+            p.setDocumento(IU.pegaNumeroCPF((CPF) p.getDocumento()));
+        } else if ( p instanceof PessoaJuridica ) {
+            p.setDocumento(IU.pegaNumeroCNPJ((CNPJ) p.getDocumento()));
+        }
     }
 
     // Método para Setar CPF ou CPNJ no Objeto pessoa
@@ -75,8 +96,9 @@ public abstract class Agenda {
         } else {
             if ( p instanceof PessoaJuridica) {
                 PessoaJuridica pessoaJuridica = (PessoaJuridica) p;
-                pessoaJuridica.setNomeFantasia(IU.pegaRazaoSocial());
+                pessoaJuridica.setNomeFantasia(IU.pegaNomeFantasia());
             }
         }
     }
+
 }
