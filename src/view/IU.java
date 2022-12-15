@@ -39,19 +39,19 @@ public class IU {
         switch(opcao) {
             case "1": 
                 menuAdicionar();
-                return this.menu();
+                return true;
             case "2":
                 buscarPessoa();
-                return this.menu();
+                return true;
             case "3":
                 mostrarTodosContatos();
-                return this.menu();
+                return true;
             case "4":
                 removerPessoa();
-                return this.menu();
+                return true;
             case "5":
                 alterarPessoa();
-                return this.menu();
+                return true;
             case "0":
             return false;
             default:

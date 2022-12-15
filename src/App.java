@@ -6,8 +6,9 @@ public class App {
         //Instância de IU
         IU iu = new IU();
 
-        //Laço da Agenda
-        iu.menu();
+        //Laço da Aplicação
+        while(iu.menu());
+
         
    }
 
