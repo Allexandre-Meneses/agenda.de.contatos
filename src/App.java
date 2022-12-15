@@ -7,7 +7,7 @@ public class App {
         IU iu = new IU();
 
         //Laço da Agenda
-        while(iu.menu());
+        iu.menu();
         
    }
 
