@@ -7,9 +7,6 @@ public class App {
         IU iu = new IU();
 
         //Laço da Aplicação
-        while(iu.menu());
-
-        
+        while(iu.menu());   
    }
-
 }
